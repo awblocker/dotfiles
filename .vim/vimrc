@@ -1,0 +1,162 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'wincent/Command-T'
+Plugin 'othree/eregex.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'Blackrush/vim-gocode'
+Plugin 'tpope/vim-surround'
+Plugin 'yakiang/excel.vim'
+Plugin 'google/vim-syncopate'
+" YCM is loaded through Glug below
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+syntax on
+
+let g:syntastic_mode_map = {'mode': 'passive'}
+let g:syntastic_go_checkers = ['gofmt', 'golint', 'gotype', 'govet']
+let g:EclimCompletionMethod = 'omnifunc'
+
+" Setup for pathogen
+call pathogen#infect()
+
+" Turn off swap files
+set noswapfile
+
+function! SetDefaultWrapAndIndents()
+  if &ft ==? 'go'
+    return
+  endif
+  set textwidth=80
+  set wrap
+  "" Setup default indentation
+  set tabstop=2
+  set shiftwidth=2
+  set softtabstop=2
+  set smarttab
+  set expandtab
+  "set autoindent
+endfun
+call SetDefaultWrapAndIndents()
+
+if has("gui_running")
+  " Set parameters for window size
+  set columns=100 lines=40
+  " Set GUI font
+  set gfn=Ubuntu\ Mono\ 12
+endif
+
+" Set colorscheme
+set background=dark
+colorscheme hybrid
+
+" Set 80 character guide
+set colorcolumn=81
+highlight ColorColumn ctermbg=Black
+highlight ColorColumn guibg=Black
+
+" Set backspace mode to 2 (smarter)
+set backspace=2
+
+" Turn off beeps!
+set noerrorbells
+
+" Avoid scrolling past bottom
+set scrolloff=3
+
+" Remap keys
+" Omnicompletion
+inoremap <C-Space> <C-x><C-o>
+
+" Set auto chdir
+set autochdir
+
+" Add command for spellcheck activation
+command SpellCheck setlocal spell spelllang=en_us
+
+" Function and mapping to add title case to ~ command
+function! TwiddleCase(str)
+  if a:str ==# toupper(a:str)
+    let result = tolower(a:str)
+  elseif a:str ==# tolower(a:str)
+    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+  else
+    let result = toupper(a:str)
+  endif
+  return result
+endfunction
+vnoremap ~ ygv"=TwiddleCase(@")<CR>Pgv
+
+" Function to make all arguments keyword
+function MakeArgsKeyword()
+    let line = getline('.')
+    let result = substitute(line, '\([a-zA-Z]\+\)\(,\|)\)', '\1=\1\2', 'g')
+    call setline('.', result)
+endfunction
+command -range KwArgs call MakeArgsKeyword()
+
+" Setup syntastic
+
+" Statusline error information
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" Error signs
+let g:syntastic_enable_signs=1
+
+" Highlighting
+let g:syntastic_enable_highlighting=1
+
+"" Code folding
+set foldmethod=indent   "Identation-based folding
+set foldnestmax=3       "Deepest fold is 4 levels
+set nofoldenable        "Don't fold by default
+set foldlevel=1         "Default folding level
+set foldcolumn=0        "Hide column of folding info
+
+" Easier window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Go-specific setup
+function! SetupForGo()
+  " Reset indentation to use tabs, which display as 2 spaces.
+  set shiftwidth=2 noexpandtab tabstop=2 textwidth=0
+  " Reset width to 100 characters for Critique readability.
+  set textwidth=100
+endfun
+
+function RunGlaze()
+  let path = expand('%:p')
+  if match(path, "/google3/") > 0
+    let dir = fnamemodify(path, ':h')
+    silent exe "!glaze " . dir . " 2>/tmp/vim.glaze.$USER.err"
+    let w = winnr()       " Remember window number.
+    cf /tmp/vim.glaze.$USER.err  " Pick up any errors from this file.
+    cwindow 3             " Open window for errors
+    " Switch back to original window.
+    exe w . "wincmd w"
+    redraw!
+  endif
+endfunction
+
+au FileType go call SetupForGo()
+au BufEnter * call SetDefaultWrapAndIndents()
+let g:gofmt_command = "goimports"
+
+set guioptions-=m " turn off menu bar
+set guioptions-=T " turn off toolbar
