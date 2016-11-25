@@ -15,7 +15,10 @@ Plugin 'othree/eregex.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'Blackrush/vim-gocode'
 Plugin 'tpope/vim-surround'
-Plugin 'yakiang/excel.vim'
+" Dependency; reqiured for vim-syncopate.
+Plugin 'google/vim-maktaba'
+" Strongly recommended: easy configuration of maktaba plugins.
+Plugin 'google/vim-glaive'
 Plugin 'google/vim-syncopate'
 " YCM is loaded through Glug below
 
@@ -28,8 +31,8 @@ let g:syntastic_mode_map = {'mode': 'passive'}
 let g:syntastic_go_checkers = ['gofmt', 'golint', 'gotype', 'govet']
 let g:EclimCompletionMethod = 'omnifunc'
 
-" Setup for pathogen
-call pathogen#infect()
+"" Setup for pathogen
+"call pathogen#infect()
 
 " Turn off swap files
 set noswapfile
