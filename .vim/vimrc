@@ -20,7 +20,9 @@ Plugin 'google/vim-maktaba'
 " Strongly recommended: easy configuration of maktaba plugins.
 Plugin 'google/vim-glaive'
 Plugin 'google/vim-syncopate'
-" YCM is loaded through Glug below
+" To install YCM:
+" cd .vim/bundle/YouCompleteMe && python install.py --clang-completer --gocode-completer
+Plugin 'valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
