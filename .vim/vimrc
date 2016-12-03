@@ -12,7 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'wincent/Command-T'
 Plugin 'othree/eregex.vim'
-Plugin 'scrooloose/syntastic'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'Blackrush/vim-gocode'
 Plugin 'tpope/vim-surround'
 " Dependency; reqiured for vim-syncopate.
@@ -23,6 +23,8 @@ Plugin 'google/vim-syncopate'
 " To install YCM:
 " cd .vim/bundle/YouCompleteMe && python install.py --clang-completer --gocode-completer
 Plugin 'valloric/YouCompleteMe'
+" PEP8 indentation
+Plugin 'hynek/vim-python-pep8-indent'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -112,6 +114,10 @@ endfunction
 command -range KwArgs call MakeArgsKeyword()
 
 " Setup syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " Statusline error information
 set statusline+=%#warningmsg#
