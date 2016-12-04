@@ -17,6 +17,8 @@ Plugin 'Blackrush/vim-gocode'
 Plugin 'tpope/vim-surround'
 " Dependency; reqiured for vim-syncopate.
 Plugin 'google/vim-maktaba'
+" codefmt support for multiple languages.
+Plugin 'google/vim-codefmt'
 " Strongly recommended: easy configuration of maktaba plugins.
 Plugin 'google/vim-glaive'
 Plugin 'google/vim-syncopate'
