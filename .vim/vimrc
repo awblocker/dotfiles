@@ -149,23 +149,7 @@ nnoremap <C-l> <C-w>l
 function! SetupForGo()
   " Reset indentation to use tabs, which display as 2 spaces.
   set shiftwidth=2 noexpandtab tabstop=2 textwidth=0
-  " Reset width to 100 characters for Critique readability.
-  set textwidth=100
 endfun
-
-function RunGlaze()
-  let path = expand('%:p')
-  if match(path, "/google3/") > 0
-    let dir = fnamemodify(path, ':h')
-    silent exe "!glaze " . dir . " 2>/tmp/vim.glaze.$USER.err"
-    let w = winnr()       " Remember window number.
-    cf /tmp/vim.glaze.$USER.err  " Pick up any errors from this file.
-    cwindow 3             " Open window for errors
-    " Switch back to original window.
-    exe w . "wincmd w"
-    redraw!
-  endif
-endfunction
 
 au FileType go call SetupForGo()
 au BufEnter * call SetDefaultWrapAndIndents()
