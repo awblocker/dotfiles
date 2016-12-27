@@ -36,8 +36,9 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 syntax on
 
-let g:syntastic_mode_map = {'mode': 'passive'}
+let g:syntastic_mode_map = {'mode': 'active', 'passive_file_types': 'go'}
 let g:syntastic_go_checkers = ['gofmt', 'golint', 'gotype', 'govet']
+let g:syntastic_python_checkers = ['pylint']
 let g:EclimCompletionMethod = 'omnifunc'
 
 "" Setup for pathogen
