@@ -15,6 +15,7 @@ Plugin 'othree/eregex.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'Blackrush/vim-gocode'
 Plugin 'tpope/vim-surround'
+Plugin 'jgdavey/tslime.vim'
 " Dependency; reqiured for vim-syncopate.
 Plugin 'google/vim-maktaba'
 " codefmt support for multiple languages.
@@ -27,6 +28,8 @@ Plugin 'google/vim-syncopate'
 Plugin 'valloric/YouCompleteMe'
 " PEP8 indentation
 Plugin 'hynek/vim-python-pep8-indent'
+" Virtualenv support
+Plugin 'jmcantrell/vim-virtualenv'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
