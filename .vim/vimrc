@@ -30,6 +30,8 @@ Plugin 'google/vim-syncopate'
 Plugin 'hynek/vim-python-pep8-indent'
 " Virtualenv support
 Plugin 'jmcantrell/vim-virtualenv'
+" CSV
+Plugin 'chrisbra/csv.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
